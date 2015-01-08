@@ -1,0 +1,24 @@
+{
+    "name": "fooman/php-yubico",
+    "description": "",
+    "license": "http://opensource.org/licenses/bsd-license.php New BSD License",
+    "authors": [
+        {
+            "name": "Simon Josefsson",
+            "email": "simon@yubico.com"
+        },
+        {
+            "name": "Olov Danielson",
+            "email": "olov@yubico.com"
+        },
+        {
+            "name": "Kristof Ringleff",
+            "email": "kristof@fooman.co.nz"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Yubico\\": "."
+        }
+    }
+}
