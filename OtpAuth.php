@@ -2,8 +2,8 @@
   /**
    * Class for verifying Yubico One-Time-Passcodes
    *
-   * @category    Auth
-   * @package     Auth_Yubico
+   * @category    Yubico
+   * @package     Yubico_OtpAuth
    * @author      Simon Josefsson <simon@yubico.com>, Olov Danielson <olov@yubico.com>
    * @copyright   2007-2012-2014 Yubico AB
    * @license     http://opensource.org/licenses/bsd-license.php New BSD License
@@ -31,7 +31,10 @@
  * }
  * </code>
  */
-class Auth_Yubico
+
+namespace Yubico;
+
+class OtpAuth
 {
 	/**#@+
 	 * @access private
