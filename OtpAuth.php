@@ -36,10 +36,6 @@ namespace Yubico;
 
 class OtpAuth
 {
-    /**#@+
-     * @access private
-     */
-
     /**
      * Yubico client ID
      *
