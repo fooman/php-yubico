@@ -467,4 +467,3 @@ class Auth_Yubico
 	  return PEAR::raiseError('NO_VALID_ANSWER');
 	}
 }
-?>
