@@ -103,7 +103,7 @@ class Auth_Yubico
 	 *                                 default true)
 	 * @access public
 	 */
-	function Auth_Yubico($id, $key = '', $https = 0, $httpsverify = 1)
+	public function Auth_Yubico($id, $key = '', $https = 0, $httpsverify = 1)
 	{
 		$this->_id =  $id;
 		$this->_key = base64_decode($key);
@@ -118,7 +118,7 @@ class Auth_Yubico
 	 * @param  string $url  New server URL part to use
 	 * @access public
 	 */
-	function setURLpart($url)
+	public function setURLpart($url)
 	{
 		$this->_url = $url;
 	}
@@ -129,7 +129,7 @@ class Auth_Yubico
 	 * @return string  Server URL part
 	 * @access public
 	 */
-	function getURLpart()
+	public function getURLpart()
 	{
 		if ($this->_url) {
 			return $this->_url;
@@ -145,7 +145,7 @@ class Auth_Yubico
 	 * @return mixed string with URL part of false if no more URLs in list
 	 * @access public
 	 */
-	function getNextURLpart()
+	public function getNextURLpart()
 	{
 	  if ($this->_url_list) $url_list=$this->_url_list;
 	  else $url_list=array('api.yubico.com/wsapi/2.0/verify',
@@ -163,7 +163,7 @@ class Auth_Yubico
 	 *
 	 * @access public
 	 */
-	function URLreset()
+	public function URLreset()
 	{
 	  $this->_url_index=0;
 	}
@@ -173,7 +173,7 @@ class Auth_Yubico
 	 *
 	 * @access public
 	 */
-	function addURLpart($URLpart)
+	public function addURLpart($URLpart)
 	{
 	  $this->_url_list[]=$URLpart;
 	}
@@ -184,7 +184,7 @@ class Auth_Yubico
 	 * @return string  Request to server
 	 * @access public
 	 */
-	function getLastQuery()
+	public function getLastQuery()
 	{
 		return $this->_lastquery;
 	}
@@ -195,7 +195,7 @@ class Auth_Yubico
 	 * @return string  Output from server
 	 * @access public
 	 */
-	function getLastResponse()
+	public function getLastResponse()
 	{
 		return $this->_response;
 	}
@@ -209,7 +209,7 @@ class Auth_Yubico
 	 * @return array     Keyed array with fields
 	 * @access public
 	 */
-	function parsePasswordOTP($str, $delim = '[:]')
+	public function parsePasswordOTP($str, $delim = '[:]')
 	{
 	  if (!preg_match("/^((.*)" . $delim . ")?" .
 			  "(([cbdefghijklnrtuv]{0,16})" .
@@ -245,7 +245,7 @@ class Auth_Yubico
 	 * @return array  parameter array from last response
 	 * @access public
 	 */
-	function getParameters($parameters)
+	public function getParameters($parameters)
 	{
 	  if ($parameters == null) {
 	    $parameters = array('timestamp', 'sessioncounter', 'sessionuse');
@@ -277,7 +277,7 @@ class Auth_Yubico
 	 * @return mixed               PEAR error on error, true otherwise
 	 * @access public
 	 */
-	function verify($token, $use_timestamp=null, $wait_for_all=False,
+	public function verify($token, $use_timestamp=null, $wait_for_all=False,
 			$sl=null, $timeout=null)
 	{
 	  /* Construct parameters string */
