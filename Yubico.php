@@ -466,4 +466,3 @@ class Auth_Yubico
 	  throw new Exception('NO_VALID_ANSWER');
 	}
 }
-?>
