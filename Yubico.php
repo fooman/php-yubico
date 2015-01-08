@@ -11,8 +11,6 @@
    * @link        http://www.yubico.com/
    */
 
-require_once 'PEAR.php';
-
 /**
  * Class for verifying Yubico One-Time-Passcodes
  *
@@ -23,12 +21,13 @@ require_once 'PEAR.php';
  *
  * # Generate a new id+key from https://api.yubico.com/get-api-key/
  * $yubi = new Auth_Yubico('42', 'FOOBAR=');
- * $auth = $yubi->verify($otp);
- * if (PEAR::isError($auth)) {
- *    print "<p>Authentication failed: " . $auth->getMessage();
- *    print "<p>Debug output from server: " . $yubi->getLastResponse();
- * } else {
- *    print "<p>You are authenticated!";
+ * try {
+ *     if($yubi->verify($otp)) {
+ *        print "<p>You are authenticated!";
+ *     }
+ * } catch (Exception $e) {
+ *     print "<p>Authentication failed: " . $e->getMessage();
+ *     print "<p>Debug output from server: " . $yubi->getLastResponse();
  * }
  * </code>
  */
@@ -284,7 +283,7 @@ class Auth_Yubico
 	  /* Construct parameters string */
 	  $ret = $this->parsePasswordOTP($token);
 	  if (!$ret) {
-	    return PEAR::raiseError('Could not parse Yubikey OTP');
+	    throw Exception('Could not parse Yubikey OTP');
 	  }
 	  $params = array('id'=>$this->_id, 
 			  'otp'=>$ret['otp'],
@@ -325,7 +324,7 @@ class Auth_Yubico
 	      $this->_lastquery .= $query;
 	      
 	      $handle = curl_init($query);
-	      curl_setopt($handle, CURLOPT_USERAGENT, "PEAR Auth_Yubico");
+	      curl_setopt($handle, CURLOPT_USERAGENT, "Auth_Yubico");
 	      curl_setopt($handle, CURLOPT_RETURNTRANSFER, 1);
 	      if (!$this->_httpsverify) {
 		curl_setopt($handle, CURLOPT_SSL_VERIFYPEER, 0);
@@ -438,9 +437,9 @@ class Auth_Yubico
 		      curl_close($h);
 		    }
 		    curl_multi_close($mh);
-		    if ($replay) return PEAR::raiseError('REPLAYED_OTP');
+		    if ($replay) throw new Exception('REPLAYED_OTP');
 		    if ($valid) return true;
-		    return PEAR::raiseError($status);
+		    throw new Exception($status);
 		  }
 		
 		curl_multi_remove_handle($mh, $info['handle']);
@@ -462,9 +461,9 @@ class Auth_Yubico
 	  }
 	  curl_multi_close ($mh);
 	  
-	  if ($replay) return PEAR::raiseError('REPLAYED_OTP');
+	  if ($replay) throw new Exception('REPLAYED_OTP');
 	  if ($valid) return true;
-	  return PEAR::raiseError('NO_VALID_ANSWER');
+	  throw new Exception('NO_VALID_ANSWER');
 	}
 }
 ?>
