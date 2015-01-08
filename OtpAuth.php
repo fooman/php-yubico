@@ -300,6 +300,7 @@ class OtpAuth
      * @param int     $timeout       Max number of seconds to wait
      *                               for responses
      *
+     * @throws Exception
      * @return mixed               PEAR error on error, true otherwise
      * @access public
      */
@@ -310,7 +311,7 @@ class OtpAuth
         /* Construct parameters string */
         $ret = $this->parsePasswordOTP($token);
         if (!$ret) {
-            throw Exception('Could not parse Yubikey OTP');
+            throw new Exception('Could not parse Yubikey OTP');
         }
         $params = array('id'    => $this->_id,
                         'otp'   => $ret['otp'],
@@ -430,7 +431,8 @@ class OtpAuth
                             $rows = explode("\r\n", trim($str));
                             $response = array();
                             while (list($key, $val) = each($rows)) {
-                                /* = is also used in BASE64 encoding so we only replace the first = by # which is not used in BASE64 */
+                                // = is also used in BASE64 encoding so we only replace the first = by #
+                                // which is not used in BASE64 */
                                 $val = preg_replace('/=/', '#', $val, 1);
                                 $row = explode("#", $val);
                                 $response[$row[0]] = $row[1];
@@ -449,8 +451,7 @@ class OtpAuth
                                 }
                             }
 
-                            $checksignature
-                                = base64_encode(
+                            $checksignature = base64_encode(
                                 hash_hmac(
                                     'sha1', utf8_encode($check),
                                     $this->_key, true
